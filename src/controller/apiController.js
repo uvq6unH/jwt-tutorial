@@ -14,7 +14,7 @@ const handleRegister = async (req, res) => {
                 DT: ''
             })
         }
-        if(req.body.password && req.body.password.length < 8 ){
+        if (req.body.password && req.body.password.length < 8) {
             return res.status(200).json({
                 EM: 'Your password must have more than 8 letters ',
                 EC: '1',
@@ -35,6 +35,23 @@ const handleRegister = async (req, res) => {
         })
     }
 }
+const handleLogin = async (req, res) => {
+    try {
+       let data = await loginRegisterService.handleUserLogin(req.body);
+        return res.status(200).json({
+            EM: data.EM,
+            EC: data.EC,
+            DT: data.DT
+        })
+    } catch (error) {
+        return res.status(500).json({
+            EM: 'error from server ',
+            EC: '-1',
+            DT: ''
+        })
+    }
+    
+}
 module.exports = {
-    testApi, handleRegister
+    testApi, handleRegister, handleLogin
 }
